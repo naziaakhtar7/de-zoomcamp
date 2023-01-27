@@ -1,0 +1,41 @@
+Question 1: Which tag has the following text? - Write the image ID to the file
+
+docker --help build
+
+Question 2: How many python packages/modules are installed?
+I didn't do this question
+
+Question 3: How many taxi trips were totally made on January 15?
+
+select count(index)
+from green_taxi_trips gt
+where cast(lpep_pickup_datetime as date) = '2019-01-15';
+
+
+Question 4: Which was the day with the largest trip distance?
+
+select cast(lpep_pickup_datetime as date)
+from green_taxi_trips gt
+order by trip_distance desc
+limit 1;
+
+
+
+Question 5: In 2019-01-01 how many trips had 2 and 3 passengers?
+
+select passenger_count,count(*)
+from green_taxi_trips gt
+where cast(lpep_pickup_datetime as date) = '2019-01-01'
+group by 1
+order by 1;
+
+
+Question 6: For the passengers picked up in the Astoria Zone which was the drop up zone that had the largest tip?
+
+select dof."Zone"
+from green_taxi_trips gt
+left join zones pu on gt."PULocationID" = pu."LocationID"
+left join zones dof on gt."DOLocationID" = dof."LocationID"
+where pu."Zone" like '%Astoria%' 
+order by gt.tip_amount desc
+limit 1;
